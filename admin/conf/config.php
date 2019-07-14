@@ -1,4 +1,10 @@
 <?php
+    session_start();
+    if (empty($_SESSION['token'])) {
+        $_SESSION['token'] = bin2hex(random_bytes(32));
+    }
+    $token = $_SESSION['token'];
+
     $db_host = "localhost";
     $db_user = "root";
     $db_pw   = "";
@@ -12,5 +18,6 @@
     if($conn->connect_error){
         die("Connection failed: " . $conn->connect_error);
     }
-    echo "Connected";
+    //echo "Connected <br>";
+    //echo $token;
 ?>

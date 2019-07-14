@@ -1,3 +1,4 @@
+<?php include("admin/conf/config.php"); ?>
 <?php include("layouts/header.php"); ?>
 <main class="container py-4">
     <div class="container">
@@ -6,32 +7,33 @@
                 <div class="card">
                     <div class="card-header">Register</div>
                      <div class="card-body">
-                        <form method="POST" action="register.php">
+                        <form method="POST" action="register.php" id="registerForm">
+                        <input type="hidden" name="token" value="<?php echo $token; ?>" />
                             <div class="form-group row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
                                  <div class="col-md-6">
-                                    <input id="name" type="text" name="name" value="" required="required" autocomplete="name" autofocus="autofocus" class="form-control ">
+                                    <input id="name" type="text" name="name" value="" class="form-control ">
                                  </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
                                 <div class="col-md-6">
-                                    <input id="email" type="email" name="email" value="" required="required" autocomplete="email" class="form-control ">
+                                    <input id="email" type="email" name="email"  class="form-control ">
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
                                 <div class="col-md-6">
-                                    <input id="password" type="password" name="password" required="required" autocomplete="new-password" class="form-control ">
+                                    <input id="password" type="password" name="password"  class="form-control ">
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
                                 <div class="col-md-6">
-                                    <input id="password-confirm" type="password" name="password_confirmation" required="required" autocomplete="new-password" class="form-control">
+                                    <input id="pwConfirm" type="password" name="pwConfirm"  class="form-control">
                                 </div>
                             </div>
 
@@ -48,4 +50,32 @@
     </div>
 </main>
 
+
 <?php include("layouts/footer.php"); ?>
+<script>
+    $(document).ready(function () {
+        $("#registerForm").validate({
+            rules:{
+                name:{
+                    required: true,
+                    minlength: 4
+                },
+                email:{
+                    required: true,
+                    email: true
+                },
+                password:{
+                    required: true,
+                    minlength: 4,
+                },
+                pwConfirm: {
+                    required: true,
+                    minlength: 4,
+                    equalTo: "#password"
+                }
+
+            }
+        });
+
+    });
+</script>
