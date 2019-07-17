@@ -39,10 +39,11 @@
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">Register</button>
+                                    <button type="submit" id="submit-data" class="btn btn-primary">Register</button>
                                 </div>
                             </div>
                         </form>
+                        <div id="response"></div>
                     </div>
                 </div>
             </div>
@@ -54,7 +55,7 @@
 <?php include("layouts/footer.php"); ?>
 <script>
     $(document).ready(function () {
-        $("#registerForm").validate({
+        $('#registerForm').validate({
             rules:{
                 name:{
                     required: true,
@@ -73,9 +74,31 @@
                     minlength: 4,
                     equalTo: "#password"
                 }
+            },
 
-            }
+
+        submitHandler: function(data) {
+            $.ajax({
+                url: "register.php",
+                type: "POST",
+                data: {name:$("#name").val(),email: $("#email").val()},
+                success: function(data,status) {
+                    console.log(data);
+                }
+            });
+        }
         });
+
+        // $("button#submit-data").click(function(){
+        //     $.post("register.php",
+        //     {name:$("#name").val()},
+        //     function(data,status){
+        //         alert(data);
+        //     });
+
+
+        // });
+
 
     });
 </script>
